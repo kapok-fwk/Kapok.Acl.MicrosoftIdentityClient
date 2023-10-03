@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.10 (2023-10-03)
+
+- :rocket: upgrade to .NET 7.0
+- :rocket: upgrade dependencies
+
 ## 0.1.1 (2022-04-23)
 
 - :tada: *feat* add strong name to libraries
