@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/kapok-fwk/kapok-fwk</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<SignAssembly>True</SignAssembly>
-	<AssemblyOriginatorKeyFile>..\..\kapok-fwk.snk</AssemblyOriginatorKeyFile>
+	<AssemblyOriginatorKeyFile>..\kapok-fwk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
