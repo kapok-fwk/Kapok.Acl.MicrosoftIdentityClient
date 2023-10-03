@@ -25,7 +25,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: Kapok.View.Wpf.sln
+      Solution_Name: Kapok.Acl.MicrosoftIdentityClient.sln
 
     steps:
     - name: Checkout
