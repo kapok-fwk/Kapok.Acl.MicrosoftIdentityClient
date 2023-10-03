@@ -1,0 +1,91 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+        include:
+          - configuration: Release
+            is_release: true
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: Kapok.View.Wpf.sln
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3.3.0
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3.0.0
+      with:
+        dotnet-version: 7.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Add Kapok package source
+      run: dotnet nuget add source --username leo-schick --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name kapok-fwk "https://nuget.pkg.github.com/kapok-fwk/index.json"
+
+    # Execute all unit tests in the solution
+    - name: Execute unit tests
+      run: dotnet test
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Build solution and generate NuGet package
+      run: |
+        dotnet build --no-restore -c $env:Configuration
+        dotnet pack -c $env:Configuration -o out
+        rm .\out\ToDoWpfApp.*.nupkg
+      env:
+        Configuration: ${{ matrix.configuration }}
+      if: ${{ matrix.is_release }}
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Nuget Packages
+        path: ./out/*.nupkg
+      if: ${{ matrix.is_release }}
+
+  publish:
+    needs: build
+
+    if: github.event_name != 'pull_request'
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Add Kapok package source
+      run: dotnet nuget add source --username leo-schick --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name kapok-fwk "https://nuget.pkg.github.com/kapok-fwk/index.json"
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: Nuget Packages
+        path: ~/download/nuget_packages/
+
+    - name: Push generated package to GitHub registry
+      run: Get-ChildItem "~/download/nuget_packages/" | foreach { dotnet nuget push $_.FullName --skip-duplicate --source kapok-fwk --api-key ${{ secrets.KAPOK_FWK_GITHUB_TOKEN }} }
