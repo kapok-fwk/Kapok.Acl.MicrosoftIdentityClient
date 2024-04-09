@@ -29,18 +29,18 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v4.1.1
       with:
         fetch-depth: 0
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3.0.0
+      uses: actions/setup-dotnet@v4.0.0
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Add Kapok package source
       run: dotnet nuget add source --username leo-schick --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name kapok-fwk "https://nuget.pkg.github.com/kapok-fwk/index.json"
@@ -64,7 +64,7 @@ jobs:
       if: ${{ matrix.is_release }}
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.3.1
       with:
         name: Nuget Packages
         path: ./out/*.nupkg
@@ -81,7 +81,7 @@ jobs:
     - name: Add Kapok package source
       run: dotnet nuget add source --username leo-schick --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name kapok-fwk "https://nuget.pkg.github.com/kapok-fwk/index.json"
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4.1.4
       with:
         name: Nuget Packages
         path: ~/download/nuget_packages/
