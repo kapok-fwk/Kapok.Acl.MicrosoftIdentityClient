@@ -134,3 +134,7 @@ _NCrunch*
 
 # Visual Studio files
 .vs
+
+# other IDE/build folders
+.mono/
+.idea/
