@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.21 (2024-04-09)
+
+- :rocket: upgrade to .NET 8.0
+- :rocket: upgrade dependencies
+
 ## 0.1.10 (2023-10-03)
 
 - :rocket: upgrade to .NET 7.0
