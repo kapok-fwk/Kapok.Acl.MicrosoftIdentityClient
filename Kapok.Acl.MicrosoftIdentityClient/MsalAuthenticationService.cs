@@ -53,6 +53,8 @@ public class MsalAuthenticationService : ISilentAuthenticationService
     private readonly string _tenant;
     private readonly string _aadInstance;
     private readonly IPublicClientApplication _clientApp;
+    private string? _accessToken;
+    private string? _idToken;
     private IAccount? _account;
 
     public string[]? Scopes { get; set; }
@@ -105,6 +107,8 @@ public class MsalAuthenticationService : ISilentAuthenticationService
 
     private async Task<bool> SilentLoginInternal(IAccount? account)
     {
+        _accessToken = null;
+        _idToken = null;
         _account = null;
         AuthenticationResult? authResult;
 
@@ -130,6 +134,8 @@ public class MsalAuthenticationService : ISilentAuthenticationService
             return;
         }*/
 
+        _accessToken = authResult.AccessToken;
+        _idToken = authResult.IdToken;
         _account = authResult.Account;
         return true;
     }
@@ -149,6 +155,8 @@ public class MsalAuthenticationService : ISilentAuthenticationService
 
     public async Task Login()
     {
+        _accessToken = null;
+        _idToken = null;
         _account = null;
         IAccount? firstAccount = await GetFistAccount();
 
@@ -178,6 +186,8 @@ public class MsalAuthenticationService : ISilentAuthenticationService
             throw new NotSupportedException($"Unexpected error occurred during login: {msalex.ErrorCode}", msalex);
         }
 
+        _accessToken = authResult.AccessToken;
+        _idToken = authResult.IdToken;
         _account = authResult.Account;
     }
 
@@ -190,6 +200,10 @@ public class MsalAuthenticationService : ISilentAuthenticationService
             accounts = (await _clientApp.GetAccountsAsync()).ToList();
         }
     }
+
+    public string? AccessToken => _accessToken;
+
+    public string? IdToken => _idToken;
 
     public string? UserName => _account?.Username;
 
