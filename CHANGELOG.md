@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 (2024-04-24)
+
+- :tada: *feat* add IdToken/AccessToken property
+- :rocket: upgrade dependencies to Kapok 0.2.0
+
 ## 0.1.21 (2024-04-09)
 
 - :rocket: upgrade to .NET 8.0

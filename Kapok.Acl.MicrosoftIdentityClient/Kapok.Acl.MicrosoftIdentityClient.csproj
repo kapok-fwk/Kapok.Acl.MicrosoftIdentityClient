@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
 
     <PackageId>Kapok.Acl.MicrosoftIdentityClient</PackageId>
-    <Version>0.1.21</Version>
+    <Version>0.2.0</Version>
     <Authors>Kapok Framework Community</Authors>
     <RepositoryUrl>https://github.com/kapok-fwk/kapok-fwk</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
