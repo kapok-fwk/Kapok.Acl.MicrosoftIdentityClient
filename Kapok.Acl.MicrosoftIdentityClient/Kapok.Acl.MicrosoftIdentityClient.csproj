@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Kapok.Acl" Version="0.2.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.60.1" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.60.3" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
   </ItemGroup>
 
