@@ -54,6 +54,7 @@ public class MsalAuthenticationService : ISilentAuthenticationService
     private readonly string _aadInstance;
     private readonly IPublicClientApplication _clientApp;
     private string? _accessToken;
+    private DateTimeOffset? _expiresOn;
     private string? _idToken;
     private IAccount? _account;
 
@@ -135,6 +136,7 @@ public class MsalAuthenticationService : ISilentAuthenticationService
         }*/
 
         _accessToken = authResult.AccessToken;
+        _expiresOn = authResult.ExpiresOn;
         _idToken = authResult.IdToken;
         _account = authResult.Account;
         return true;
@@ -187,6 +189,7 @@ public class MsalAuthenticationService : ISilentAuthenticationService
         }
 
         _accessToken = authResult.AccessToken;
+        _expiresOn = authResult.ExpiresOn;
         _idToken = authResult.IdToken;
         _account = authResult.Account;
     }
@@ -201,8 +204,19 @@ public class MsalAuthenticationService : ISilentAuthenticationService
         }
     }
 
+    /// <summary>
+    /// Access Token that can be used as a bearer token to access protected web APIs.
+    /// </summary>
     public string? AccessToken => _accessToken;
 
+    /// <summary>
+    /// Gets the point in time when the Access Token ceases to be valid. This value is calculated based on current UTC time measured locally and the value expires in receivesIn from the service.
+    /// </summary>
+    public DateTimeOffset? ExpiresOn => _expiresOn;
+
+    /// <summary>
+    /// Gets the Id Token if returned by the service or null if no Id Token is returned.
+    /// </summary>
     public string? IdToken => _idToken;
 
     public string? UserName => _account?.Username;
