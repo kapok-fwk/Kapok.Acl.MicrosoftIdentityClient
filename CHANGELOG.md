@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 (2024-07-27)
+
+- :tada: *feat* add ExpiresOn property
+- :rocket: upgrade Microsoft.Identity.Client enforcing 4.62.0 or above
+
 ## 0.2.0 (2024-04-24)
 
 - :tada: *feat* add IdToken/AccessToken property
