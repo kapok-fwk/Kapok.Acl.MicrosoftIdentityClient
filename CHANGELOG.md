@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- :tada: add support for .Net 10.0
+- :rocket: upgrade dependencies to Kapok 0.3.0
+
 ## 0.2.1 (2024-07-27)
 
 - :tada: *feat* add ExpiresOn property
