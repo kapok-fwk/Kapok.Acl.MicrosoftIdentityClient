@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 (2026-08-22)
 
 - :tada: add support for .Net 10.0
 - :rocket: upgrade dependencies to Kapok 0.3.0
